@@ -36,4 +36,14 @@ class Payment extends Model
     {
         return $this->hasMany(Number::class);
     }
+
+    public function isPaid(): bool
+    {
+        return $this->status === PaymentStatus::PAID;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === PaymentStatus::PENDING;
+    }
 }

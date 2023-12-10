@@ -1,13 +1,21 @@
-<div class="w-screen h-screen bg-fuchsia-100">
-    <div class="w-1/2 pt-8 mx-auto">
-        <h1 class="text-5xl font-bold text-center text-fuchsia-500">Chá Fralda Manuela 🍼</h1>
+<div class="flex w-screen h-screen p-0 m-0 flew-row">
 
-        <div class="mt-6">
-            <livewire:payment-create />
-        </div>
+    {{-- FORMULÁRIO E LISTA --}}
+    <div class="w-8/12 h-full">
+        <div class="w-9/12 ml-auto pr-14">
 
-        <div class="mt-8 bg-fuchsia-100">
-            {{ $this->table }}
+            <div class="px-3 py-5 bg-white border shadow rounded-xl border-fuchsia-300/40">
+                <livewire:payment-create />
+            </div>
+
+            <div class="mt-5 shadow rounded-xl">
+                {{ $this->table }}
+            </div>
         </div>
+    </div>
+
+    {{-- NÚMEROS SORTEADOS --}}
+    <div class="w-3/12">
+        <livewire:numbers-listing />
     </div>
 </div>

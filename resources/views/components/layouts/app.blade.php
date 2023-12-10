@@ -9,17 +9,22 @@
 
         <title>{{ config('app.name') }}</title>
 
-        @filamentStyles
-        @vite('resources/css/app.css')
-
         <style>
             [x-cloak] {
                 display: none !important;
             }
         </style>
+
+        @filamentStyles
+        @vite('resources/css/app.css')
+
+        @stack('styles')
+
     </head>
 
-    <body class="antialiased">
+    <body class="antialiased bg-fuchsia-100">
+        <h1 class="justify-center w-full pt-4 text-5xl font-bold text-center mb-7 text-fuchsia-500">Chá Fralda Manuela 🍼</h1>
+
         {{ $slot }}
 
         @livewire('notifications')

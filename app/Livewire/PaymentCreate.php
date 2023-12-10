@@ -104,6 +104,8 @@ class PaymentCreate extends Component implements HasForms
 
             $this->resetForm();
 
+            $this->dispatch('list::refresh');
+
             Notification::make()
                 ->success()
                 ->title('Número(s) rifado(s) com sucesso!')

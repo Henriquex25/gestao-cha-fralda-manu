@@ -51,6 +51,6 @@ class Number extends Model
 
     public function isNotAvailable(): bool
     {
-        return !$this->available();
+        return !$this->isAvailable();
     }
 }
