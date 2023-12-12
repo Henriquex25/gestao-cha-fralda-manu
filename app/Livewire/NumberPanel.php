@@ -6,7 +6,7 @@ use App\Models\Number;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
-class NumbersListing extends Component
+class NumberPanel extends Component
 {
     public Collection $numbers;
     protected $listeners = ['list::refresh' => 'getAllNumbers'];
@@ -47,6 +47,6 @@ class NumbersListing extends Component
 
     public function render()
     {
-        return view('livewire.numbers-listing');
+        return view('livewire.number-panel');
     }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Enums\PaymentStatus;
 use App\Models\Payment;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
+use Filament\Support\Enums\ActionSize;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -12,9 +16,10 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
-class PaymentIndex extends Component implements HasForms, HasTable
+class ParticipantIndex extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -70,7 +75,48 @@ class PaymentIndex extends Component implements HasForms, HasTable
                     ])
             ])
             ->actions([
-                // ...
+                Action::make('Confirmar pagamento')
+                    ->label('Confirmar pag.')
+                    ->icon('heroicon-o-check')
+                    ->button()
+                    ->color('success')
+                    ->size(ActionSize::Small)
+                    ->outlined()
+                    ->visible(fn (Model $payment) => $payment->isPending())
+                    ->requiresConfirmation()
+                    ->modalHeading('Confirmar pagamento')
+                    ->modalDescription('Tem certeza que deseja confirmar o pagamento?')
+                    ->action(function (Model $payment) {
+                        $payment->update(['status' => PaymentStatus::PAID]);
+                        Notification::make()
+                            ->title('Pagamento confirmado com sucesso')
+                            ->success()
+                            ->send();
+
+                        $this->dispatch('list::refresh');
+                    }),
+                Action::make('Remover participante')
+                    ->label('Remover')
+                    ->icon('heroicon-o-trash')
+                    ->button()
+                    ->color('danger')
+                    ->size(ActionSize::Small)
+                    ->outlined()
+                    ->visible(fn (Model $payment) => !$payment->isPaid())
+                    ->requiresConfirmation()
+                    ->modalHeading('Remover participante')
+                    ->modalDescription('Tem certeza que deseja remover o participante?')
+                    ->action(function (Model $payment) {
+                        $payment->delete();
+
+                        Notification::make()
+                            ->title('Participante removido com sucesso')
+                            ->success()
+                            ->send();
+
+                        $this->dispatch('list::refresh');
+                    }),
+
             ])
             ->bulkActions([
                 // ...
@@ -79,6 +125,6 @@ class PaymentIndex extends Component implements HasForms, HasTable
 
     public function render(): View
     {
-        return view('livewire.payment-index');
+        return view('livewire.participant-index');
     }
 }

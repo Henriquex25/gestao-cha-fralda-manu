@@ -16,6 +16,6 @@
 
     {{-- NÚMEROS SORTEADOS --}}
     <div class="w-3/12">
-        <livewire:numbers-listing />
+        <livewire:number-panel />
     </div>
 </div>

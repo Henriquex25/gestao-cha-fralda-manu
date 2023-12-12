@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\PaymentIndex;
+use App\Livewire\ParticipantIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', PaymentIndex::class);
+Route::get('/', ParticipantIndex::class);
