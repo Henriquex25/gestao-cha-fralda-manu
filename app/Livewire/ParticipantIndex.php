@@ -20,6 +20,8 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Number;
 use Livewire\Component;
 
 class ParticipantIndex extends Component implements HasForms, HasTable, HasActions
@@ -95,6 +97,13 @@ class ParticipantIndex extends Component implements HasForms, HasTable, HasActio
                     ->action(function (Model $payment, Component $livewire) {
                         $livewire->confirmPayment($payment);
 
+                        $numbers = implode(', ', $payment->numbers->pluck('id')->toArray());
+
+                        Http::post('http://192.168.0.107:3000/send-message', [
+                            'number'  => Number::sanitize($payment->participant->mobile),
+                            'message' => "Olá {$payment->participant->name}, \n \n Seu pagamento foi confirmado! \n \n Seu número é: {$numbers} \n \n Boa sorte e obrigado por participar do chá rifa da Manuela",
+                        ]);
+
                         Notification::make()
                             ->title('Pagamento confirmado com sucesso')
                             ->success()
@@ -123,7 +132,6 @@ class ParticipantIndex extends Component implements HasForms, HasTable, HasActio
 
                         $this->dispatch('list::refresh');
                     }),
-
             ])
             ->bulkActions([
                 // ...

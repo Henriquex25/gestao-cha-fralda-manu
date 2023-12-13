@@ -82,7 +82,7 @@ class PaymentCreate extends Component implements HasForms
             if ($this->chosenNumberIsNotAvailable($chosenNumbers)) {
                 Notification::make()
                     ->danger()
-                    ->title('Os número(s) escolhido(s) já está(ão) em uso!')
+                    ->title('Participante criado com sucesso!')
                     ->send();
 
                 return;
