@@ -1,11 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.fi-ta-empty-state {
-    @apply bg-fuchsia-200
-}
-
-label.fi-fo-field-wrp-label span {
-    @apply text-fuchsia-600
-}

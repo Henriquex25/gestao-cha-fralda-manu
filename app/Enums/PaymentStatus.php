@@ -24,7 +24,7 @@ enum PaymentStatus: string implements HasLabel, HasIcon, HasColor
     public function getIcon(): ?string
     {
         return match ($this) {
-            self::PENDING => 'heroicon-o-x-circle',
+            self::PENDING => 'heroicon-o-clock',
             self::PAID    => 'heroicon-o-check-circle',
         };
     }

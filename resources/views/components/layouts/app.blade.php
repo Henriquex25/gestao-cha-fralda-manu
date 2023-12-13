@@ -23,7 +23,7 @@
     </head>
 
     <body class="antialiased bg-fuchsia-100">
-        <h1 class="justify-center w-full pt-4 text-5xl font-bold text-center mb-7 text-fuchsia-500">Chá Fralda Manuela 🍼</h1>
+        <h1 class="justify-center w-full pt-4 text-4xl font-bold text-center md:text-5xl mb-7 text-fuchsia-500">Chá Fralda Manuela 🍼</h1>
 
         {{ $slot }}
 
