@@ -37,13 +37,14 @@ class ParticipantCreate extends Component implements HasForms
             ->schema([
                 TextInput::make('name')
                     ->label('Nome')
-                    ->default('teste')
+                    ->placeholder('Nome do participante')
+                    ->string()
                     ->required(),
 
                 TextInput::make('mobile')
                     ->label('Celular')
                     ->mask('(99) 99999-9999')
-                    ->default('(11) 99999-9999')
+                    ->placeholder('(99) 99999-9999')
                     ->required(),
 
                 Select::make('payment_type')
