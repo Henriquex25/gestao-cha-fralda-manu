@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class PaymentCreate extends Component implements HasForms
+class ParticipantCreate extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -151,6 +151,6 @@ class PaymentCreate extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.payment-create');
+        return view('livewire.participant-create');
     }
 }

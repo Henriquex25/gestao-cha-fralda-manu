@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->createNumbers();
 
-        Participant::factory(2)->create();
+        // Participant::factory(2)->create();
     }
 
     private function createNumbers(): void
