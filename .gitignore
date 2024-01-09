@@ -17,3 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+.php-cs-fixer*
+_ide_helper.php
