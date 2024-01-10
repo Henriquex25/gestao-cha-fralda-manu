@@ -57,7 +57,9 @@ class ParticipantCreate extends Component implements HasForms
                 Select::make('numbers')
                     ->label('Números')
                     ->multiple()
-                    ->options(Number::query()->available()->get()->pluck('id', 'id'))
+                    ->options(fn (): array => Number::query()->available()->get()->pluck('id', 'id')->toArray())
+                    ->validationAttribute('Números')
+                    ->validationMessages(['required' => 'Selecione pelo menos um número!'])
                     ->searchable()
                     ->required(),
 
@@ -77,6 +79,8 @@ class ParticipantCreate extends Component implements HasForms
 
     public function create(): void
     {
+        $this->validate();
+
         try {
             $chosenNumbers = $this->getChosenNumbers();
 
@@ -145,7 +149,7 @@ class ParticipantCreate extends Component implements HasForms
         $numbers->each->update(['payment_id' => $payment->id]);
     }
 
-    protected function resetForm(): void
+    public function resetForm(): void
     {
         $this->form->fill();
     }

@@ -17,6 +17,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "laravellegends/pt-br-validator": "^10.0",
         "livewire/livewire": "^3.2",
         "spatie/laravel-backup": "^8.4"
     },
