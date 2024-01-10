@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 .php-cs-fixer*
 _ide_helper.php
+tokens/

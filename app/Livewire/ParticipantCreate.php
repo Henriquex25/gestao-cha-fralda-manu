@@ -38,6 +38,8 @@ class ParticipantCreate extends Component implements HasForms
                 TextInput::make('name')
                     ->label('Nome')
                     ->placeholder('Nome do participante')
+                    ->autofocus()
+                    ->extraInputAttributes(['x-on:list::refresh.window' => '$focus.focus($el)'])
                     ->string()
                     ->required(),
 
@@ -113,7 +115,7 @@ class ParticipantCreate extends Component implements HasForms
 
             Notification::make()
                 ->success()
-                ->title('Número(s) rifado(s) com sucesso!')
+                ->title('Número(s) cadastrado(s) com sucesso!')
                 ->send();
         } catch (\Exception $e) {
             DB::rollBack();
