@@ -18,5 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 .php-cs-fixer*
-_ide_helper.php
+_ide_helper*
 tokens/

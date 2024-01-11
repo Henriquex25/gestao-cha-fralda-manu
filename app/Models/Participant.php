@@ -23,6 +23,14 @@ class Participant extends Model
         return Attribute::set(fn (string $name) => Str::ucfirst($name));
     }
 
+    protected function mobile(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($number) => strlen($number) === 11 ? preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $number) : preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $number),
+            set: fn ($number) => preg_replace('/[^0-9]/', '', $number),
+        );
+    }
+
     public function numbers(): HasManyThrough
     {
         return $this->hasManyThrough(Number::class, Payment::class);
