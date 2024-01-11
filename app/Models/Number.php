@@ -20,7 +20,7 @@ class Number extends Model
 
     public function participant(): HasOneThrough
     {
-        return $this->hasOneThrough(Participant::class, Payment::class);
+        return $this->hasOneThrough(Participant::class, Payment::class, );
     }
 
     public function payment(): BelongsTo

@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\ParticipantIndex;
+use App\Livewire\Sweepstake;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', ParticipantIndex::class);
+Route::get('/', ParticipantIndex::class)->name('index');
+Route::get('/sorteio', Sweepstake::class)->name('sweepstake');
