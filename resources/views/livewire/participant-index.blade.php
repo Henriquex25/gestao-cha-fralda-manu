@@ -3,7 +3,6 @@
     {{-- FORMULÁRIO E LISTA --}}
     <div class="order-2 w-full mt-3 lg:mt-0 lg:h-full lg:w-[78%] lg:order-1 lg:pr-5">
         <div class="flex flex-col items-center w-full lg:items-end lg:w-9/12 lg:ml-auto">
-
             <div class="w-11/12 px-3 py-5 bg-white border shadow rounded-xl border-fuchsia-300/40">
                 <livewire:participant-create />
             </div>

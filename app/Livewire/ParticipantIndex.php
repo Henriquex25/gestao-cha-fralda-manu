@@ -36,35 +36,7 @@ class ParticipantIndex extends Component implements HasForms, HasTable, HasActio
     {
         return $table
             ->query(Payment::query()->with(['participant', 'numbers']))
-            ->columns([
-                Split::make([
-                    TextColumn::make('participant.name')
-                        ->label('Nome')
-                        ->searchable()
-                        ->sortable(),
-
-                    TextColumn::make('participant.mobile')
-                        ->label('Celular')
-                        ->searchable(),
-
-                    TextColumn::make('payment_type')
-                        ->label('Fralda ou pix'),
-
-                    TextColumn::make('numbers.id')
-                        ->label('Números'),
-
-                    IconColumn::make('status')
-                        ->label('Pagamento'),
-
-                    TextColumn::make('observation')
-                        ->label('Observação'),
-
-                    TextColumn::make('created_at')
-                        ->label('Criado em')
-                        ->dateTime('d/m/Y H:i', 'America/Sao_Paulo'),
-                ])->from('md'),
-
-            ])
+            ->columns($this->getColumns())
             ->filters([
                 SelectFilter::make('status')
                     ->label('Pagamento')
@@ -128,6 +100,38 @@ class ParticipantIndex extends Component implements HasForms, HasTable, HasActio
             ->bulkActions([
                 // ...
             ]);
+    }
+
+    protected function getColumns(): array
+    {
+        $columns = [
+            TextColumn::make('participant.name')
+                ->label('Nome')
+                ->searchable()
+                ->sortable(),
+
+            TextColumn::make('participant.mobile')
+                ->label('Celular')
+                ->searchable(),
+
+            TextColumn::make('payment_type')
+                ->label('Fralda ou pix'),
+
+            TextColumn::make('numbers.id')
+                ->label('Números'),
+
+            IconColumn::make('status')
+                ->label('Pagamento'),
+
+            TextColumn::make('observation')
+                ->label('Observação'),
+
+            TextColumn::make('created_at')
+                ->label('Criado em')
+                ->dateTime('d/m/Y H:i', 'America/Sao_Paulo'),
+        ];
+
+        return request()->isMobile() ? [Split::make($columns)] : $columns;
     }
 
     public function confirmPayment(int|Payment $payment): void
