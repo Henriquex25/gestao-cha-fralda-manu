@@ -54,7 +54,7 @@ class ParticipantIndex extends Component implements HasForms, HasTable, HasActio
             ])
             ->actions([
                 Action::make('Confirmar pagamento')
-                    ->label('Confirmar pag.')
+                    ->label('Confirmar')
                     ->icon('heroicon-o-check')
                     ->button()
                     ->color('success')

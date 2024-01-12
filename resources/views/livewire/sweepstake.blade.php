@@ -16,7 +16,7 @@
             {{-- BOTÃO DE INICIAR CONTAGEM REGRESSIVA --}}
             <button
                 type="button"
-                class="w-60 h-14 bg-fuchsia-600 text-white rounded-3xl font-semibold text-xl leading-9 disabled:bg-fuchsia-500/80 disabled:cursor-wait"
+                class="w-60 h-14 bg-fuchsia-600 text-white rounded-3xl font-semibold text-2xl leading-9 disabled:bg-fuchsia-500/80 disabled:cursor-wait"
                 x-on:click="startCountdown"
                 x-ref="startCountdownButton"
                 x-show="!showSweepstake"
@@ -34,11 +34,11 @@
                 ])
                 x-cloak
             >
-                <span class="text-lg flex flex-row">O vencedor foi</span>
+                <span class="text-lg flex flex-row select-none">O vencedor foi</span>
                 <div class="flex flex-row items-center justify-center mt-0.5">
-                    <x-icon.trophy class="!h-10 !w-10 mt-1.5" />
+                    <x-icon.trophy class="!h-10 !w-10 mt-1.5 select-none" />
                     <span class="mx-3">{{ !is_null($winner) ? "{$winner->id} - {$winner->payment->participant->name}" : '' }}</span>
-                    <x-icon.trophy class="!h-10 !w-10 mt-1.5" />
+                    <x-icon.trophy class="!h-10 !w-10 mt-1.5 select-none" />
                 </div>
             </div>
 
