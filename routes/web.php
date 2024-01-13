@@ -2,6 +2,7 @@
 
 use App\Livewire\ParticipantIndex;
 use App\Livewire\Sweepstake;
+use App\Livewire\WhatsApp;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', ParticipantIndex::class)->name('index');
 Route::get('/sorteio', Sweepstake::class)->name('sweepstake');
+Route::get('/whatsapp', WhatsApp::class)->name('whatsapp');

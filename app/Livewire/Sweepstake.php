@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Enums\PaymentStatus;
 use App\Models\Number;
+use App\Models\Winner;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -34,7 +35,18 @@ class Sweepstake extends Component
 
         $this->winner = $validNumbers->random();
 
+        $this->storeWinner();
+
         $this->js("addConfetti()");
+    }
+
+    protected function storeWinner(): void
+    {
+        Winner::query()
+            ->create([
+                'number_id'      => $this->winner->id,
+                'participant_id' => $this->winner->payment->participant->id,
+            ]);
     }
 
     protected function sweepstakeStream(): void
@@ -48,7 +60,7 @@ class Sweepstake extends Component
             $participantName = $number->payment->participant->name;
 
             $this->stream('winner', "{$numberId} - {$participantName}", true);
-            usleep(35000);
+            usleep(50000);
         });
     }
 

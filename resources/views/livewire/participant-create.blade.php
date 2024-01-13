@@ -4,12 +4,22 @@
 
         <div class="flex justify-between">
             <div class="flex justify-start space-x-2">
+                {{-- BOTÃO DE IR PRO SORTEIO --}}
                 <button
-                    class="px-4 py-2 mt-5 font-semibold text-emerald-500 border border-emerald-500 rounded-3xl bg-transparent hover:bg-emerald-500 hover:text-white focus:bg-emerald-500 focus:text-white focus-visible:outline-emerald-500/70"
+                    class="px-4 py-2 mt-5 font-semibold text-blue-500 border border-blue-500 rounded-3xl bg-transparent hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus-visible:outline-blue-500/70"
                     type="button"
                     x-on:click="window.location.href = '{{ route('sweepstake') }}'"
                 >
                     Sorteio
+                </button>
+
+
+                <button
+                    class="px-4 py-2 mt-5 font-semibold text-emerald-500 border border-emerald-500 rounded-3xl bg-transparent hover:bg-emerald-500 hover:text-white focus:bg-emerald-500 focus:text-white focus-visible:outline-emerald-500/70"
+                    type="button"
+                    x-on:click="window.location.href = '{{ route('whatsapp') }}'"
+                >
+                    Whatsapp
                 </button>
             </div>
 
