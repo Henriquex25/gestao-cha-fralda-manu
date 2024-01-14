@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\WhatsApp\WhatsAppService;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +16,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind('WhatsAppService', function () {
+            $baseUrl   = config('whatsapp.base_url');
+            $port      = config('whatsapp.port');
+            $secretKey = config('whatsapp.secret_key');
+
+            $client = (new PendingRequest)
+                ->baseUrl("{$baseUrl}:{$port}/api")
+                ->withToken($secretKey)
+                ->withHeaders(['Content-Type' => 'application/json']);
+
+            return new WhatsAppService($client);
+        });
     }
 
     /**

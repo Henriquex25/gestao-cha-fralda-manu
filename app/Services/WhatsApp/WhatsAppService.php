@@ -9,36 +9,11 @@ use Illuminate\Http\Client\Response;
 
 class WhatsAppService
 {
-    protected Client $client;
+    protected string $session;
 
-    protected string $session = '';
-
-    public function __construct()
+    public function __construct(protected Client $client, ?string $session = null)
     {
-        $this->makeClient();
-        $this->getSession();
-    }
-
-    public static function make(): self
-    {
-        return new self();
-    }
-
-    private function makeClient(): void
-    {
-        $baseUrl   = config('whatsapp.base_url');
-        $port      = config('whatsapp.port');
-        $secretKey = config('whatsapp.secret_key');
-
-        $this->client = (new Client)
-            ->baseUrl("{$baseUrl}:{$port}/api")
-            ->withToken($secretKey)
-            ->withHeaders(['Content-Type' => 'application/json']);
-    }
-
-    private function getSession(): void
-    {
-        $this->session = config('whatsapp.session');
+        $this->session = $session ?: config('whatsapp.session');
     }
 
     public function checkConnectionSession(): Response
@@ -49,7 +24,7 @@ class WhatsAppService
         return $response;
     }
 
-    public function startSession(): Response
+    public function startSession()
     {
         $endpoint = "{$this->session}/start-session";
 

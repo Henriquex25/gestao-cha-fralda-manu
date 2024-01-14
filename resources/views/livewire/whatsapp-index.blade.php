@@ -23,11 +23,24 @@
                 </span>
             </div>
 
-            @unless ($connected)
-                <h5 class="text-center text-gray-500">Escaneie o QR Code</h5>
-                <img src="{{ $qrcodeInBase64 }}">
-            @endunless
+            @if (!$connected)
+                @if (empty($qrcodeInBase64))
+                    <x-button text="Conectar o whatsapp" wire:loading wire:target="startSession" />
+                @else
+                    <div class="inline-flex space-x-4">
+                        <span class="text-center text-gray-500">Escaneie o QR Code</span>
+                        <button class="text-gray-600 hover:text-gray-800 focus:text-gray-800 cursor-pointer" wire:click="startSession">
+                            <x-icon.arrow-path class="w-5 h-5" wire:loading.class="animate-spin" wire:target="startSession" />
+                        </button>
+                    </div>
+                    <img src="{{ $qrcodeInBase64 }}" class="select-none">
+                @endif
+            @endif
         </div>
 
     </div>
 </div>
+
+@push('scripts')
+    {{-- @vite('resources/js/laravel-echo.js') --}}
+@endpush
