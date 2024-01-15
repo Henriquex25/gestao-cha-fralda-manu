@@ -1,5 +1,6 @@
 <div
     class="flex flex-col items-center justify-center p-0 m-0 space-y-3 lg:space-y-0 lg:items-stretch lg:flex-row"
+    x-data="whatsapp"
 >
 
     <div class="w-9/12 bg-white relative shadow rounded-xl border border-fuchsia-300/50 relative">
@@ -11,18 +12,36 @@
         </button>
 
         <div class="flex items-center mb-3.5 mt-5 flex-col px-5">
-            {{-- STATUS --}}
-            <div class="self-end">
-                <span class="text-gray-600">Status:</span>
-                <span @class([
-                    "font-semibold",
-                    "text-green-600" => $connected,
-                    "text-red-600"   => !$connected
-                ])>
-                    {{ $connected ? 'Conectado' : 'Desconectado' }}
-                </span>
+
+            {{-- BOTÃO DE DESLOGAR DO WHATSAPP + STATUS --}}
+            <div class="flex flex-row justify-between w-full">
+                <div>
+                    @if ($connected)
+                        <button
+                            class="p-0 bg-transparent text-fuchsia-500 hover:text-fuchsia-600 focus:text-fuchsia-600 disabled:cursor-wait disabled:text-fuchsia-400/75"
+                            wire:click="logoutSession"
+                            wire:loading.attr="disabled"
+                        >
+                            <x-loading wire:loading wire:target="logoutSession" />
+                            <x-icon.exit wire:loading.remove wire:target="logoutSession" />
+                        </button>
+                    @endif
+                </div>
+
+                {{-- STATUS --}}
+                <div>
+                    <span class="text-gray-600">Status:</span>
+                    <span @class([
+                        "font-semibold",
+                        "text-green-600" => $connected,
+                        "text-red-600"   => !$connected
+                    ])>
+                        {{ $connected ? 'Conectado' : 'Desconectado' }}
+                    </span>
+                </div>
             </div>
 
+            {{-- QR CODE --}}
             @if (!$connected)
                 @if (empty($qrcodeInBase64))
                     <x-button text="Conectar o whatsapp" wire:loading wire:target="startSession" />
@@ -36,11 +55,45 @@
                     <img src="{{ $qrcodeInBase64 }}" class="select-none">
                 @endif
             @endif
+
+            {{-- MENSAGENS --}}
+            <div class="flex flex-row justify-around w-full mt-3">
+                {{-- VENDEDOR --}}
+                <div class="w-4/12">
+                    <div class=" px-2 py-4 bg-fuchsia-100 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
+                        <h5 class="text-center text-fuchsia-500 text-lg">Enviar mensagem para o vencedor</h5>
+
+                        <textarea class="mt-3.5 rounded-xl border-fuchsia-300 focus:ring focus:ring-fuchsia-500/40 focus:border-fuchsia-300" cols="40" rows="20"></textarea>
+
+                        <x-button text="Enviar" wire:loading wire:target="sendWhatsappMessageToWinner" />
+                    </div>
+                </div>
+                <div class="w-6/12">
+                    <div class="px-2 py-4 bg-fuchsia-100 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
+                        <h5 class="text-center text-fuchsia-500">Enviar vídeo para os participantes</h5>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
 </div>
 
-@push('scripts')
-    {{-- @vite('resources/js/laravel-echo.js') --}}
-@endpush
+@script
+<script>
+    Alpine.data('whatsapp', () => {
+        return {
+            init() {
+                this.checkWhatsappSessionConnection()
+            },
+            checkWhatsappSessionConnection() {
+                setInterval(() => {
+                    if (!this.$wire.connected && this.$wire.qrcodeInBase64){
+                        this.$wire.checkConnectionSession()
+                    }
+                }, 5000);
+            },
+        }
+    })
+</script>
+@endscript

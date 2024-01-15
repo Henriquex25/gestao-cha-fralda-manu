@@ -30,8 +30,8 @@ class WhatsAppService
 
         $response = $this->client
             ->post($endpoint, [
-                // 'webhook'    => route('whatsapp.webhook'),
-                'webhook'    => 'https://api.webhookinbox.com/i/SV4FFF8S/in/',
+                'webhook' => route('whatsapp.webhook'),
+                // 'webhook'    => 'https://api.webhookinbox.com/i/JFs7SEoB/in/',
                 'waitQrCode' => true
             ]);
 

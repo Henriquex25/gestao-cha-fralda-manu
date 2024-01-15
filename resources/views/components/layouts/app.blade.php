@@ -29,6 +29,7 @@
 
         @livewire('notifications')
 
+        @stack('scripts-prioritized')
         @filamentScripts
         @vite('resources/js/app.js')
         @stack('scripts')
