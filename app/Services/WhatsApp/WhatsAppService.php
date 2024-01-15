@@ -55,4 +55,17 @@ class WhatsAppService
 
         return $response;
     }
+
+    public function sendMessage(string $phone, string $message, bool $isGroup = false): Response
+    {
+        $endpoint = "{$this->session}/send-message";
+
+        $response = $this->client->timeout(120)->post($endpoint, [
+            "phone"   => trim($phone),
+            "isGroup" => $isGroup,
+            "message" => $message
+        ]);
+
+        return $response;
+    }
 }

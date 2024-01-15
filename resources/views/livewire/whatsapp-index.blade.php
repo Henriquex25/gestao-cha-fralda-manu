@@ -46,7 +46,7 @@
                 @if (empty($qrcodeInBase64))
                     <x-button text="Conectar o whatsapp" wire:loading wire:target="startSession" />
                 @else
-                    <div class="inline-flex space-x-4">
+                    <div class="inline-flex space-x-4" wire:poll.5s="checkConnectionSession">
                         <span class="text-center text-gray-500">Escaneie o QR Code</span>
                         <button class="text-gray-600 hover:text-gray-800 focus:text-gray-800 cursor-pointer" wire:click="startSession">
                             <x-icon.arrow-path class="w-5 h-5" wire:loading.class="animate-spin" wire:target="startSession" />
@@ -56,16 +56,14 @@
                 @endif
             @endif
 
+            @if ($connected)
             {{-- MENSAGENS --}}
             <div class="flex flex-row justify-around w-full mt-3">
                 {{-- VENDEDOR --}}
                 <div class="w-4/12">
                     <div class=" px-2 py-4 bg-fuchsia-100 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
-                        <h5 class="text-center text-fuchsia-500 text-lg">Enviar mensagem para o vencedor</h5>
-
-                        <textarea class="mt-3.5 rounded-xl border-fuchsia-300 focus:ring focus:ring-fuchsia-500/40 focus:border-fuchsia-300" cols="40" rows="20"></textarea>
-
-                        <x-button text="Enviar" wire:loading wire:target="sendWhatsappMessageToWinner" />
+                        <h5 class="text-center text-fuchsia-500 text-lg">Enviar mensagem para o ganhador</h5>
+                        <livewire:whatsapp.send-message>
                     </div>
                 </div>
                 <div class="w-6/12">
@@ -74,6 +72,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
 
     </div>
@@ -83,16 +82,6 @@
 <script>
     Alpine.data('whatsapp', () => {
         return {
-            init() {
-                this.checkWhatsappSessionConnection()
-            },
-            checkWhatsappSessionConnection() {
-                setInterval(() => {
-                    if (!this.$wire.connected && this.$wire.qrcodeInBase64){
-                        this.$wire.checkConnectionSession()
-                    }
-                }, 5000);
-            },
         }
     })
 </script>
