@@ -68,4 +68,20 @@ class WhatsAppService
 
         return $response;
     }
+
+    public function sendImageOrVideo(string $phone, string $fileName, string $path, ?string $message = null, bool $isGroup = false): Response
+    {
+        $endpoint = "{$this->session}/send-image";
+
+        $response = $this->client->timeout(120)->post($endpoint, [
+            "phone"    => $phone,
+            "isGroup"  => $isGroup,
+            "filename" => $fileName,
+            'path'     => $path,
+            "caption"  => $message,
+            "base64"   => '',
+        ]);
+
+        return $response;
+    }
 }

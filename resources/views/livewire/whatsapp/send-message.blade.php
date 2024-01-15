@@ -33,6 +33,7 @@
             wire:loading.attr="disabled"
             wire:loading.class="disabled:cursor-wait"
             wire:target="sendMessage"
+            wire:confirm="Deseja realmente enviar esta mensagem?"
         >
             <x-loading wire:loading wire:target="sendMessage" class="text- h-5 w-5 mr-2" />
             Enviar
