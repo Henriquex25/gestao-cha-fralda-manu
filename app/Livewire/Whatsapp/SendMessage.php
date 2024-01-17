@@ -2,22 +2,40 @@
 
 namespace App\Livewire\Whatsapp;
 
+use App\Models\Winner;
 use App\Services\WhatsApp\Facade\Whatsapp;
 use Filament\Notifications\Notification;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class SendMessage extends Component
 {
-    #[Validate('required|min:10')]
-    public string $winnerPhone = '';
+    #[Locked]
+    public ?Winner $winner = null;
 
-    #[Validate('required|min:1')]
-    public string $messageToWinner = '';
+    #[Validate('required|min:2')]
+    public string $message = '';
+
+    public function mount(): void
+    {
+        $this->getWinner();
+    }
+
+    protected function getWinner(): void
+    {
+        $this->winner = Winner::query()
+            ->with('participant')
+            ->latest()
+            ->first();
+    }
 
     public function sendMessage(): void
     {
-        $response = Whatsapp::sendMessage($this->winnerPhone, $this->messageToWinner)->collect();
+        $participantMobile = '55' . $this->winner->participant->mobile;
+
+        // $response = Whatsapp::sendMessage($participantMobile, $this->message)->collect();
+        $response = Whatsapp::sendMessage('5511959273990', $this->message)->collect();
 
         if ($response->get('status') !== 'success') {
             Notification::make()

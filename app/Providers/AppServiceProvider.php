@@ -20,9 +20,10 @@ class AppServiceProvider extends ServiceProvider
             $baseUrl   = config('whatsapp.base_url');
             $port      = config('whatsapp.port');
             $secretKey = config('whatsapp.secret_key');
+            $session   = config('whatsapp.session');
 
             $client = (new PendingRequest)
-                ->baseUrl("{$baseUrl}:{$port}/api")
+                ->baseUrl("{$baseUrl}:{$port}/api/{$session}/")
                 ->withToken($secretKey)
                 ->withHeaders(['Content-Type' => 'application/json']);
 

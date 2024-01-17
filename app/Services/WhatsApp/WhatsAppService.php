@@ -9,29 +9,23 @@ use Illuminate\Http\Client\Response;
 
 class WhatsAppService
 {
-    protected string $session;
-
-    public function __construct(protected Client $client, ?string $session = null)
+    public function __construct(protected Client $client)
     {
-        $this->session = $session ?: config('whatsapp.session');
+        //
     }
 
     public function checkConnectionSession(): Response
     {
-        $endpoint = "{$this->session}/check-connection-session";
-        $response = $this->client->get($endpoint);
+        $response = $this->client->get('/check-connection-session');
 
         return $response;
     }
 
     public function startSession()
     {
-        $endpoint = "{$this->session}/start-session";
-
         $response = $this->client
-            ->post($endpoint, [
-                'webhook' => route('whatsapp.webhook'),
-                // 'webhook'    => 'https://api.webhookinbox.com/i/JFs7SEoB/in/',
+            ->post('/start-session', [
+                'webhook'    => route('whatsapp.webhook'),
                 'waitQrCode' => true
             ]);
 
@@ -40,27 +34,21 @@ class WhatsAppService
 
     public function closeSession(): Response
     {
-        $endpoint = "{$this->session}/close-session";
-
-        $response = $this->client->post($endpoint);
+        $response = $this->client->post('/close-session');
 
         return $response;
     }
 
     public function logoutSession(): Response
     {
-        $endpoint = "{$this->session}/logout-session";
-
-        $response = $this->client->post($endpoint);
+        $response = $this->client->post('/logout-session');
 
         return $response;
     }
 
     public function sendMessage(string $phone, string $message, bool $isGroup = false): Response
     {
-        $endpoint = "{$this->session}/send-message";
-
-        $response = $this->client->timeout(120)->post($endpoint, [
+        $response = $this->client->timeout(120)->post('/send-message', [
             "phone"   => trim($phone),
             "isGroup" => $isGroup,
             "message" => $message
@@ -71,9 +59,7 @@ class WhatsAppService
 
     public function sendImageOrVideo(string $phone, string $fileName, string $path, ?string $message = null, bool $isGroup = false): Response
     {
-        $endpoint = "{$this->session}/send-image";
-
-        $response = $this->client->timeout(120)->post($endpoint, [
+        $response = $this->client->timeout(120)->post('/send-image', [
             "phone"    => $phone,
             "isGroup"  => $isGroup,
             "filename" => $fileName,

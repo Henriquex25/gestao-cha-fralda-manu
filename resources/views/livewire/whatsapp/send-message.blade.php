@@ -1,29 +1,23 @@
-<form wire:submit="sendMessage">
+<form wire:submit="sendMessage" class="w-full 2xl:w-auto">
     <div class="flex flex-col items-center">
         {{-- NOME + CELULAR --}}
-        <div class="flex flex-row justify-between w-full px-3 mt-2 text-md text-fuchsia-500">
-            {{-- <div>
-                <span>Nome:</span>
-                <span>{{ $winner?->name }}</span>
-            </div> --}}
+        <div class="flex flex-col 2xl:flex-row items-center 2xl:items-start lg:justify-between w-full px-3 mt-2 text-md text-fuchsia-500">
             <div>
-                <span>Celular:</span>
-                {{-- <span>{{ $winner?->mobile }}</span> --}}
-                <span>
-                    <input type="text" wire:model="winnerPhone" class="rounded-2xl ml-1 h-7 text-fuchsia-500 bg-white border border-fuchsia-400 focus:border-fuchsia-500 focus:ring-fuchsia-500">
-                    @error('winnerPhone')<span class="text-red-500 mt-0.5">{{ $message }}</span>@enderror
-                </span>
+                <span class="text-fuchsia-400">Nome:</span>
+                <span class="font-semibold">{{ $winner?->participant->name }}</span>
+            </div>
+            <div>
+                <span class="text-fuchsia-400">Celular:</span>
+                <span class="font-semibold">{{ $winner?->participant->mobile }}</span>
             </div>
         </div>
 
         {{-- MENSAGEM --}}
         <textarea
-            class="mt-3.5 rounded-xl border-fuchsia-300 focus:ring focus:ring-fuchsia-500/40 focus:border-fuchsia-300 text-fuchsia-500"
-            cols="40"
-            rows="20"
-            wire:model="messageToWinner"
+            class="mt-3.5 px-2 py-1 rounded-xl border-fuchsia-300 focus:ring focus:ring-fuchsia-500/40 focus:border-fuchsia-300 text-fuchsia-500 h-[28rem] w-11/12 focus:outline-none"
+            wire:model="message"
         ></textarea>
-        @error('messageToWinner')<span class="text-red-500 mt-0.5">{{ $message }}</span>@enderror
+        @error('message')<span class="text-red-500 mt-0.5">{{ $message }}</span>@enderror
 
         {{-- BOTAO ENVIAR --}}
         <button

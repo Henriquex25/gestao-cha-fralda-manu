@@ -1,11 +1,11 @@
 <div
     class="flex flex-col items-center justify-center p-0 m-0 space-y-3 lg:space-y-0 lg:items-stretch lg:flex-row"
-    x-data="whatsapp"
+    x-data
 >
 
-    <div class="w-9/12 bg-white relative shadow rounded-xl border border-fuchsia-300/50 relative">
+    <div class="w-11/12 lg:w-9/12 bg-white mt-5 lg:mt-0 relative shadow rounded-xl border border-fuchsia-300/50">
         <button
-            class="absolute right-6 -top-9 text-fuchsia-500 bg-transparent hover:text-fuchsia-600 focus:text-fuchsia-600"
+            class="absolute right-4 -top-7 lg:right-6 lg:-top-8 text-fuchsia-500 bg-transparent hover:text-fuchsia-600 focus:text-fuchsia-600"
             x-on:click="window.location.href = '{{ route('index') }}'"
         >
             Voltar
@@ -46,7 +46,7 @@
                 @if (empty($qrcodeInBase64))
                     <x-button text="Conectar o whatsapp" wire:loading wire:target="startSession" />
                 @else
-                    <div class="inline-flex space-x-4" wire:poll.5s="checkConnectionSession">
+                    <div class="inline-flex space-x-4 mt-3 lg:mt-0" wire:poll.5s="checkConnectionSession">
                         <span class="text-center text-gray-500">Escaneie o QR Code</span>
                         <button class="text-gray-600 hover:text-gray-800 focus:text-gray-800 cursor-pointer" wire:click="startSession">
                             <x-icon.arrow-path class="w-5 h-5" wire:loading.class="animate-spin" wire:target="startSession" />
@@ -58,19 +58,19 @@
 
             @if ($connected)
             {{-- MENSAGENS --}}
-            <div class="flex flex-row justify-around w-full mt-3">
+            <div class="flex flex-col lg:flex-row items-around lg:justify-around w-full mt-3">
                 {{-- VENCEDOR --}}
-                <div class="w-4/12">
+                <div class="w-11/12 lg:w-4/12 mb-5 lg:mb-0">
                     <div class=" px-2 py-4 bg-fuchsia-100 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
-                        <h5 class="text-center text-fuchsia-500 text-lg">Enviar mensagem para o ganhador</h5>
+                        <h5 class="text-center text-fuchsia-500 text-lg font-semibold">Enviar mensagem para o ganhador</h5>
                         <livewire:whatsapp.send-message>
                     </div>
                 </div>
 
                 {{-- ENVIAR VÍDEO PARA OS PARTICIPANTES --}}
-                <div class="w-6/12">
+                <div class="w-11/12 lg:w-4/12">
                     <div class="px-2 py-4 bg-fuchsia-100 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
-                        <h5 class="text-center text-fuchsia-500 text-lg mb-5">Enviar vídeo para os participantes</h5>
+                        <h5 class="text-center text-fuchsia-500 text-lg mb-5 font-semibold">Enviar vídeo para todos os participantes</h5>
                         <livewire:whatsapp.send-video>
                     </div>
                 </div>
@@ -80,12 +80,3 @@
 
     </div>
 </div>
-
-@script
-<script>
-    Alpine.data('whatsapp', () => {
-        return {
-        }
-    })
-</script>
-@endscript
