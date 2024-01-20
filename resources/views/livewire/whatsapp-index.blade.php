@@ -57,21 +57,13 @@
             @endif
 
             @if ($connected)
+
             {{-- MENSAGENS --}}
             <div class="flex flex-col lg:flex-row items-around lg:justify-around w-full mt-3">
-                {{-- VENCEDOR --}}
                 <div class="w-11/12 lg:w-4/12 mb-5 lg:mb-0">
-                    <div class=" px-2 py-4 bg-fuchsia-100 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
+                    <div class=" px-2 py-4 bg-fuchsia-100 min-h-[78vh] rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
                         <h5 class="text-center text-fuchsia-500 text-lg font-semibold">Enviar mensagem para o ganhador</h5>
                         <livewire:whatsapp.send-message>
-                    </div>
-                </div>
-
-                {{-- ENVIAR VÍDEO PARA OS PARTICIPANTES --}}
-                <div class="w-11/12 lg:w-4/12">
-                    <div class="px-2 py-4 bg-fuchsia-100 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] shadow-fuchsia-300/70 border border-fuchsia-300 flex flex-col items-center">
-                        <h5 class="text-center text-fuchsia-500 text-lg mb-5 font-semibold">Enviar vídeo para todos os participantes</h5>
-                        <livewire:whatsapp.send-video>
                     </div>
                 </div>
             </div>

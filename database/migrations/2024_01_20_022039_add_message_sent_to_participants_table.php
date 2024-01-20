@@ -10,12 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('winners', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('number_id')->constrained();
-            $table->foreignId('participant_id')->constrained();
-            $table->boolean('message_sent')->default(false);
-            $table->timestamps();
+        Schema::table('participants', function (Blueprint $table) {
+            $table->boolean('message_sent')->default(false)->after('mobile');
         });
     }
 
@@ -24,6 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('winners');
+        Schema::table('participants', function (Blueprint $table) {
+            $table->dropColumn('message_sent');
+        });
     }
 };
