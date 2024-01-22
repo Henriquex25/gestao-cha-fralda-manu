@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Whatsapp;
 
+use App\Enums\PaymentStatus;
 use App\Jobs\SendMessageViaWhatsapp;
 use App\Jobs\SendVideoViaWhatsapp;
 use App\Models\Participant;
@@ -80,21 +81,13 @@ Envie sua chave *PIX* para que o prêmio de R$ 200,00 seja realizado.';
     {
         $this->saveVideo();
 
-        $count = 0;
-
         Participant::query()
-            ->where('id', '>', 45)
+            ->whereRelation('payments', 'status', PaymentStatus::PAID)
+            ->where('message_sent', false)
             ->each(function (Participant $participant) use (&$count) {
-                if ($count === 3) {
-                    return;
-                }
-
                 $message = $this->injectParticipantInfoAndGetMessage($participant);
 
-//                SendMessageViaWhatsapp::dispatch($participant, $message);
                 SendVideoViaWhatsapp::dispatch($participant, $message);
-
-                $count++;
             });
 
 

@@ -10,11 +10,15 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\RateLimiter;
 
 class SendVideoViaWhatsapp implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public int $tries = 0;
 
     public function __construct(
         public Participant $participant,
@@ -24,20 +28,25 @@ class SendVideoViaWhatsapp implements ShouldQueue
         $this->connection = 'redis';
     }
 
+    public function middleware(): array
+    {
+        return [
+            new RateLimited('whatsapp'),
+        ];
+    }
+
     public function handle(): void
     {
-        if ($this->participant->video_sent) {
+        if ($this->participant->message_sent) {
             return;
         }
 
-        $mobile = '11959273990';
-//        $participantMobile = '55' . $this->participant->mobile;
-        $participantMobile = '55' . $mobile;
+        $participantMobile = '55' . preg_replace('/[^0-9]/', '', $this->participant->mobile);
 
         $response = Whatsapp::sendImageOrVideo(
             phone: $participantMobile,
             fileName: 'video-cha-rifa-manuela',
-            path: '/home/henrique/Projetos/gestao-cha-fralda-manu/storage/app/public/videos/sorteio.mp4',
+            path: 'http://192.168.0.7/storage/videos/sorteio.mp4',
             message: $this->message,
         )->collect();
 

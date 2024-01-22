@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->string('name')->unique();
             $table->string('mobile');
             $table->boolean('message_sent')->default(false);
-            $table->boolean('video_sent')->default(false);
             $table->timestamps();
         });
     }

@@ -17,12 +17,10 @@ class Participant extends Model
         'name',
         'mobile',
         'message_sent',
-        'video_sent',
     ];
 
     protected $casts = [
         'message_sent' => 'boolean',
-        'video_sent'   => 'boolean',
     ];
 
     protected function name(): Attribute
